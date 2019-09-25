@@ -92,7 +92,7 @@ def files(p):
                     contents[f] = "directory"
             return jsonify({"Status": "directory", "data": {"dir": contents}})
         else:
-            with open('r', path) as rf:
+            with open(path, 'r') as rf:
                 return jsonify({"Status": "file", "data": {'filename': path, 'contents': rf.read()}})
 
     else:
@@ -100,7 +100,7 @@ def files(p):
             abort(400)
 
         if os.path.isfile(path):
-            with open('w', path) as wf:
+            with open(path, 'w') as wf:
                 wf.write(request.json['contents'])
 
             return jsonify({'Status': 'success', "data": {'filename': path, 'contents': request.json['contents']}})

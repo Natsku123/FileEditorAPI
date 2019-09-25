@@ -3,7 +3,7 @@ import json
 
 
 def get_conf():
-    with open('r', 'config.json') as conf_file:
+    with open('config.json', 'r') as conf_file:
         return json.load(conf_file)
 
 
@@ -12,7 +12,7 @@ def get_secret():
     Get secret from config.
     :return:
     """
-    with open("config/config.json", "r") as conf:
+    with open("config.json", "r") as conf:
         data = json.load(conf)
 
     return data['secret']
