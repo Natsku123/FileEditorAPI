@@ -49,7 +49,13 @@ def hello_world():
     return 'Hello World!'
 
 
-@app.route('/v1/users/add', methods=['POST'])
+@app.route('/users/', methods=['GET'])
+@jwt_required()
+def users():
+    return jsonify(all_users())
+
+
+@app.route('/users/add', methods=['POST'])
 @jwt_required()
 def add_user():
     if not request.json or 'user' not in request.json:
@@ -63,7 +69,7 @@ def add_user():
     return jsonify(create_user(user['username'], user['password']))
 
 
-@app.route('/v1/users/edit', methods=['POST'])
+@app.route('/users/edit', methods=['POST'])
 @jwt_required()
 def edit_user():
     if not request.json or 'user' not in request.json:
@@ -77,7 +83,7 @@ def edit_user():
     return jsonify(update_user(user['id'], user['username'], user['password']))
 
 
-@app.route('/v1/files/<path:p>', methods=['GET, POST'])
+@app.route('/files/<path:p>', methods=['GET, POST'])
 @jwt_required()
 def files(p):
     root_dir = config['root-dir']

@@ -106,6 +106,11 @@ def get_user_by_id(user_id):
     return get(sql, (user_id,), False)
 
 
+def all_users():
+    sql = "SELECT users.id, users.id FROM `users`;"
+    return get(sql)
+
+
 def create_user(username: str, password: str):
     sql = "INSERT INTO `users` (`username`, `password`) VALUES (%s, ENCRYPT(%s, CONCAT('$6$', SUBSTRING(SHA(RAND()), -16))));"
     if insert(sql, (username, password)):
