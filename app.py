@@ -1,5 +1,6 @@
 from flask import Flask, make_response, jsonify, request, abort
 from flask_jwt import JWT, jwt_required, current_identity
+from flask_cors import CORS, cross_origin
 from werkzeug.security import safe_str_cmp
 from modules.database import *
 import datetime
@@ -42,6 +43,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = get_secret()
 app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(hours=3)
 jwt = JWT(app, authenticate, identity)
+cors = CORS(app, supports_credentials=True)
+
 
 
 @app.route('/')
@@ -51,12 +54,14 @@ def hello_world():
 
 @app.route('/users/', methods=['GET'])
 @jwt_required()
+@cross_origin()
 def users():
     return jsonify(all_users())
 
 
 @app.route('/users/add', methods=['POST'])
 @jwt_required()
+@cross_origin()
 def add_user():
     if not request.json or 'user' not in request.json:
         abort(400)
@@ -71,6 +76,7 @@ def add_user():
 
 @app.route('/users/edit', methods=['POST'])
 @jwt_required()
+@cross_origin()
 def edit_user():
     if not request.json or 'user' not in request.json:
         abort(400)
@@ -85,6 +91,7 @@ def edit_user():
 
 @app.route('/files/<path:p>', methods=['GET, POST'])
 @jwt_required()
+@cross_origin()
 def files(p):
     root_dir = config['root-dir']
     path = os.path.join(root_dir, p)
