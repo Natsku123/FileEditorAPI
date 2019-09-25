@@ -37,10 +37,10 @@ def insert(sql, values=None):
     :return:
     """
     db = pymysql.connect(
-        config['host'],
-        config['username'],
-        config['password'],
-        config['name'],
+        config['database']['host'],
+        config['database']['username'],
+        config['database']['password'],
+        config['database']['name'],
         cursorclass=pymysql.cursors.DictCursor
     )
 
@@ -70,10 +70,10 @@ def get(sql, values=None, everything=True):
     :return:
     """
     db = pymysql.connect(
-        config['host'],
-        config['username'],
-        config['password'],
-        config['name'],
+        config['database']['host'],
+        config['database']['username'],
+        config['database']['password'],
+        config['database']['name'],
         cursorclass=pymysql.cursors.DictCursor
     )
 
