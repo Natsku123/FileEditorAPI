@@ -25,7 +25,7 @@ def authenticate(username, password):
     user = auth(username, password)
 
     if user:
-        return User(user['id'], user['user'], user['password'])
+        return User(user['id'], user['username'], user['password'])
 
 
 def identity(payload):
