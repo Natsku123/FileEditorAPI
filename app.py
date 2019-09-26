@@ -88,8 +88,8 @@ def edit_user():
     return jsonify(update_user(user['id'], user['username'], user['password']))
 
 
-@app.route('/files', methods=['GET, POST'], defaults={'p': None})
-@app.route('/files/<path:p>', methods=['GET, POST'])
+@app.route('/files', methods=['GET', 'POST'], defaults={'p': None})
+@app.route('/files/<path:p>', methods=['GET', 'POST'])
 @cross_origin()
 @jwt_required()
 def files(p):
