@@ -51,7 +51,7 @@ def hello_world():
     return 'Hello World!'
 
 
-@app.route('/users/', methods=['GET'])
+@app.route('/users', methods=['GET'])
 @cross_origin()
 @jwt_required()
 def users():
@@ -88,11 +88,14 @@ def edit_user():
     return jsonify(update_user(user['id'], user['username'], user['password']))
 
 
+@app.route('/files', methods=['GET, POST'], defaults={'p': None})
 @app.route('/files/<path:p>', methods=['GET, POST'])
 @cross_origin()
 @jwt_required()
 def files(p):
     root_dir = config['root-dir']
+    if p is None:
+        p = ""
     path = os.path.join(root_dir, p)
     if request.method == "GET":
         if os.path.isdir(path):
